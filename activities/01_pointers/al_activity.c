@@ -77,8 +77,10 @@
 // freeing 0x7fffc89a17d0 value 2
 // freeing 0x7fffc89a1830 value 5
 
-void do_nothing() {
-
+void do_nothing(void* delt) {
+	int* delete = (int*)delt;
+	printf("Freeing %p value %d\n", delete, *delete);
+	free(delete);
 }
 
 int main() {
@@ -91,19 +93,29 @@ int main() {
 
 	// adds a bunch of numbers to the list
 	for(int i = 1; i <= NUM_MAX; i++) {
-		nums[i-1] = i;
-		array_list_add(mylist, &nums[i-1]);
+		int* num = malloc(sizeof(int));
+		*num = i;
+		printf("malloced %p value %d\n", num, *num);
+		array_list_add(mylist, num);
 	}
 
 	// removes a couple randomly
 	for(int i = 1; i <= NUM_TO_DELETE; i++) {
 		int rand_index = rand() % array_list_length(mylist);
-
+		int* delete = array_list_get_idx(mylist, rand_index);
 		array_list_del_idx(mylist, rand_index, 1);
+		// printf("Freeing %p value %d\n", delete, *delete);
+		// free(delete);
+		
 	}
 
-	printf("mylist (size %lu) values:\n", array_list_length(mylist));
+	int size = array_list_length(mylist);
+	printf("mylist (size %d) values:\n", size);
 	// Your STEP 1 printing loop will go here
+	for(int i = 0; i < size; i++){
+		int *iptr = (int*)array_list_get_idx(mylist, i);
+		printf("%d\n", *iptr);
+	}
 
 	// free the array list which may leak some values until step 3
 	array_list_free(mylist);

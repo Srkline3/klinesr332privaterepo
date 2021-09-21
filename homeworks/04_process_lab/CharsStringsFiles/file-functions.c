@@ -48,7 +48,7 @@ int fgetlines(char* fileName, char ***fileLines) {
    */
 
   int  len, e, lineCount = 0;
-  char *nextLine = NULL;
+  char *nextLine = (char*) malloc(MAX_LINE_LENGTH * sizeof(char));
   FILE *filePtr = NULL;
   char **reallocResult = NULL;
   char **result = (char **) calloc(MAX_LINES, sizeof(char *));

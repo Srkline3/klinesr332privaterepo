@@ -12,7 +12,9 @@ these functions here in the .c file rather than the header.
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "basic_threads.h"
+#include <unistd.h>
+#include <signal.h>
+#include "preempt_threads.h"
 
 // 64kB stack
 #define THREAD_STACK_SIZE 1024*64
@@ -44,6 +46,7 @@ int currentThreadIndex;
 
 //Helper
 void thread_finisher(void (*fun_ptr)(), void* parameter){
+    
     fun_ptr(parameter);
     finish_thread();
 }
@@ -206,13 +209,15 @@ printf("Starting threads...");
 schedule_threads()
 printf("All threads finished");
 */
-void schedule_threads() {
+void schedule_threads_with_preempt(int usecs) {
     printf("Schedule threads time: %d\n", currentThreadCount);
     while(currentThreadCount > 0){
         for(int i = 0; i < 5; i++){
             if(validThreads[i]){
                 printf("Swarping Threads at index %d, current=%d\n", i, currentThreadCount);
                 currentThreadIndex = i;
+                signal(SIGALRM, yield);
+                alarm(usecs);
                 swapcontext(&scheduler, &threads[currentThreadIndex]);
                 printf("Back to the scheduler\n");
             }

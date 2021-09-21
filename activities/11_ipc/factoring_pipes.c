@@ -30,33 +30,49 @@ Take a look at shared_simple and pipes_simple
 
 int main(void)
 {
+unsigned long long int target, i, start = 0;
+    printf("Give a number to factor.\n");
+    // 18446744073709551615 is max, I think
+    // I think 666666662 gives good results
+    scanf("%llu",&target);
 
-  unsigned long long int target, i, start = 0;
-  printf("Give a number to factor.\n");
-  // 18446744073709551615 is max, I think
-  // I think 666666662 gives good results
-  scanf("%llu",&target);
+    int fpip[2];
 
-  int pid = fork();
-  if(pid == 0) {
-    start = 2;
-  } else {
-    pid = fork();
+    if(pipe(fpip) == -1)
+        perror("Failed to create pipe.");
+
+    int pid = fork();
     if(pid == 0) {
-      start = 3;
+        start = 2;
+        close(fpip[0]);
     } else {
-      // I'm the parent
-      wait(NULL);
-      wait(NULL);
-      printf("Finished.\n");
-      return 0;
-    }
-  }
+        pid = fork();
+        if(pid == 0) {
+            start = 3;
+            close(fpip[0]);
+        } else {
+            // I'm the parent
+            close(fpip[1]);
+            wait(NULL);
+            wait(NULL);
 
-  for(i = start; i <= target/2; i = i + 2) {
-    if(target % i == 0) {
-      printf("%llu is a factor\n", i);
+            int recv_len = 1;
+            char buffer[128];
+            while(recv_len > 0){
+                recv_len = read(fpip[0],buffer,128);
+                write(0,buffer,recv_len);
+            }
+            printf("Finished.\n");
+            return 0;
+        }
     }
-  }
-  return 0;
+
+    for(i = start; i <= target/2; i = i + 2) {
+        if(target % i == 0) {
+            char buff[128];
+            sprintf(buff,"%llu is a factor\n", i);
+            write(fpip[1],buff,strlen(buff));
+        }
+    }
+    return 0;
 }

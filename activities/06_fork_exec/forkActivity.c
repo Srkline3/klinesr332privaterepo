@@ -133,7 +133,25 @@ exiting
  */
 
 int main() {
-  // look at forkExample for help!
+  for(int i = 0; i < 10; i++){
+        int pid = fork();
+         if(pid == 0){
+            // printf("Hey guys, it's me, child %d\n", i);
+            // sleep(1);
+            // exit(i);
+        
+            char output[50];
+            snprintf(output, 50, "Hey guys, it's me, child %d",i);
+            execlp("./buffalosay.bin", "./buffalosay.bin", output, NULL);
+            perror("error execing!");
+            exit(99);                      
+          }
+  }
+  int exit_code;
+  for(int i = 0; i < 10; i++){
+          wait(&exit_code);
+          printf("One child returns with exit code %d\n",WEXITSTATUS(exit_code));
+  }
   printf("exiting\n");
 
   return 0;

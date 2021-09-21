@@ -58,9 +58,32 @@ void cleanup() {
     exit(0);
 }
 
+void cleanup_handler(int signal){
+    cleanup();
+}
+
+void disable_interrupt(){
+    sigset_t mask;
+    sigemptyset (&mask);
+    sigaddset (&mask, SIGINT);
+    sigprocmask(SIG_BLOCK, &mask, NULL);
+}
+
+void enable_interrupt(){
+    sigset_t mask;
+    sigemptyset (&mask);
+    sigaddset (&mask, SIGINT);
+    sigprocmask(SIG_UNBLOCK, &mask, NULL);
+}
+
 int main() 
 {
+    signal(SIGINT, cleanup_handler);
+    signal(SIGALRM, cleanup_handler);
     part1();
+    disable_interrupt();
     part2();
+    enable_interrupt();
+    alarm(4);
     part3();
 }

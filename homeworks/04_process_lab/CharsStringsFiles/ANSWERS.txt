@@ -4,12 +4,13 @@ Answer the questions posted in the instructions here.
 
 Question 1:
 
-(a)
+(a) SIGSEGV, Segmentation fault
 
 
-(b)
+(b) Line 30, fgets 
 
 Problem 2:
+Memory is not allocated for the argument in fgets
 
 Problem 3:
-
+Malloc

@@ -13,10 +13,11 @@ Look at the test cases for example of usage
 
  */
 int add_with_pointers(int *val1, int *val2) {
-    return 0;
+    return *val1 + *val2;
 }
 
 void test_add_with_pointers(CuTest *tc) {
+    printf("Add with pointers");
     int a = 7;
     int b = 11;
     CuAssertIntEquals(tc, 18, add_with_pointers(&a, &b));
@@ -36,11 +37,16 @@ Look at the test cases for example of usage
  */
 
 void ensure_correct_order(int *should_be_smaller, int *should_be_bigger) {
-
+    if(*should_be_smaller > *should_be_bigger){
+        int temp = *should_be_smaller;
+        *should_be_smaller = *should_be_bigger;
+        *should_be_bigger = temp;
+    }
   
 }
 
 void test_ensure_correct_order(CuTest *tc) {
+    printf("Ensure correct order");
     int a = 7;
     int b = 11;
     ensure_correct_order(&a, &b);
@@ -71,10 +77,17 @@ Look at the test cases for example of usage
  */
 
 int special_equals(int *val1, int *val2) {
-  return 0;
+    if(val1 == val2){
+        return 2;
+    } else if(*val1 == *val2) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 void test_special_equals(CuTest *tc) {
+    printf("Special equals");
     int a = 7;
     int b = 11;
     int c = 11;
@@ -116,11 +129,35 @@ Look at the test cases for example of usage
  */
 
 void string_with_q(char *s1, char* s2, char** output) {
+    char *strIndex1, *strIndex2;
+    strIndex1 = s1;
+    strIndex2 = s2;
 
+    while(true){
+        char s1Char = *strIndex1;
+        char s2Char = *strIndex2;
+        if(s1Char == '\0'){
+            *output = NULL;
+            break;
+        }
+
+        if(s1Char == 'Q'){
+            *output = s1;
+            break;
+        }
+
+        if(s2Char =='Q'){
+            *output = s2;
+            break;
+        }
+        strIndex1++;
+        strIndex2++;
+    }
   
 }
 
 void test_string_with_q(CuTest *tc) {
+    printf("String with q");
     char* s1 = "abQ";
     char* s2 = "abc";
     char* output;
@@ -181,11 +218,18 @@ Look at the test cases for example of usage
 
  */
 int sum_linked_list(struct ll_node* head) {
-    
-    return 0;
+    struct ll_node* myHead = head;
+    int sum = 0;
+    while(myHead){
+        struct ll_node headDeref = *myHead;
+        sum = sum + headDeref.val;
+        myHead = headDeref.next;
+    }
+    return sum;
 }
 
 void test_sum_linked_list(CuTest *tc) {
+    printf("Link list");
     struct ll_node* head = make_sample_list(3);
     CuAssertIntEquals(tc, 3, sum_linked_list(head));
     free_list(head);
@@ -200,7 +244,7 @@ void test_sum_linked_list(CuTest *tc) {
 
 
 int main(int argc, char *argv[]) {
-    
+    printf("programming time!\n");
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
 

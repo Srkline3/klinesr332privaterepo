@@ -23,13 +23,29 @@ Take a look at shared_simple and pipes_simple
 
  */
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/wait.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
+
+long long int *global_var;
 
 int main(void)
 {
+
+  global_var = mmap(NULL, sizeof(long long int)*2000, PROT_READ | PROT_WRITE, 
+		  MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
   unsigned long long int target, i, start = 0;
   printf("Give a number to factor.\n");
@@ -38,8 +54,10 @@ int main(void)
   scanf("%llu",&target);
 
   int pid = fork();
+  int outputPoint = 0;
   if(pid == 0) {
     start = 2;
+    outputPoint = 1000;
   } else {
     pid = fork();
     if(pid == 0) {
@@ -48,6 +66,15 @@ int main(void)
       // I'm the parent
       wait(NULL);
       wait(NULL);
+      for(int i = 0; i < 1000; i++){
+        if (global_var[i] == 0) break;
+        printf("%llu is a factor\n", global_var[i]);
+      }
+      for(int i = 1000; i < 2000; i++){
+        if (global_var[i] == 0) break;
+        printf("%llu is a factor\n", global_var[i]);
+      }
+
       printf("Finished.\n");
       return 0;
     }
@@ -55,7 +82,8 @@ int main(void)
 
   for(i = start; i <= target/2; i = i + 2) {
     if(target % i == 0) {
-      printf("%llu is a factor\n", i);
+      global_var[outputPoint] = i;
+      outputPoint++;
     }
   }
   return 0;

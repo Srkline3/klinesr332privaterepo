@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
         printf("ARGUMENT %d: %s\n", i, argv[i]); 
     }
     printf("Pausing for 5 seconds...\n");
-    sleep(5);
+    sleep(10);
     printf("Do nothing program finished!\n");
     return 0;
 }
