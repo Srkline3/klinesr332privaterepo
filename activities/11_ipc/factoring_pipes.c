@@ -1,7 +1,7 @@
 /*
 
-Here is some code that uses fork to speed up factoring.  Yes, I agree
-it factors in a super dumb way.
+   Here is some code that uses fork to speed up factoring.  Yes, I agree
+   it factors in a super dumb way.
 
 First: Understand the code
 
@@ -21,7 +21,7 @@ finish one solution, try the other.
 
 Take a look at shared_simple and pipes_simple
 
- */
+*/
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
