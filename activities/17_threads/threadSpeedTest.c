@@ -48,7 +48,7 @@ int power(int a, int b) {
 
 void* threadFun(void* startingInt) {
 	int start = *((int*)startingInt);
-	for (int i = start; i < WORK_SIZE; i += 2) {
+	for (int i = start; i < WORK_SIZE; i += THREAD_COUNT) {
 		dest[i] = power(i, i);
 	}
 }
@@ -96,17 +96,23 @@ int main(int argc, char** argv) {
 
 	gettimeofday(&start, NULL);
 
-	pthread_t tid[2];
+	pthread_t tid[THREAD_COUNT - 1];
+	int starting_ints[THREAD_COUNT];
 
-	int starting1 = 0;
-	int starting2 = 1;
+	for(int i = 0; i<THREAD_COUNT - 1; i++){
+		starting_ints[i] = i;
+		pthread_create(&tid[i], NULL, threadFun, &starting_ints[i]);
+	}
 
-	pthread_create(&tid[0], NULL, threadFun, &starting1);
+	// pthread_create(&tid[0], NULL, threadFun, &starting1);
 
 	// lets let the parent do some work as well
-	threadFun(&starting2);
+	int mainStarterino = THREAD_COUNT;
+	threadFun(&starting_ints[THREAD_COUNT-1]);
 
-	pthread_join(tid[0], NULL);
+	for(int i = 0; i<THREAD_COUNT -1; i++){
+		pthread_join(tid[i], NULL);
+	}
 
 	gettimeofday(&end, NULL);
 

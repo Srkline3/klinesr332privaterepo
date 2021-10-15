@@ -15,4 +15,4 @@
 #
 # (b) setup an "all" rule so that "make all" builds all 3 executables.
 #
-# (c) setup a "clean" rule to remove all executables and emacs backup files. gi
+# (c) setup a "clean" rule to remove all executables and emacs backup files. 

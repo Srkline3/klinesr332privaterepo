@@ -4,21 +4,44 @@
 void
 hibernate(void)
 {
+	if(fork() == 0){
+		char* hibernate[1];
+		hibernate[0] = "./hibernate"; 
+		execlp(hibernate[0], hibernate[0], NULL);
+	}else{
+		wait(NULL);
+	}
+	
 }
 
 void
 csse332_sleep(void)
 {
+	pid_t child = fork();
+	if(child == 0){
+		pid_t grandchild = fork();
+		if(grandchild == 0){
+			char* hibernate[1];
+			hibernate[0] = "./hibernate"; 
+			execlp(hibernate[0], hibernate[0], NULL);
+		}else{
+			wait(NULL);
+			printf("Sleep process done in the background\n");
+			exit(EXIT_SUCCESS);
+		}
+	}
 }
 
 void
 cleanup(void)
 {
+
 }
 
 void
 pong(void)
 {
+	int me_pipe[2];
 }
 
 
