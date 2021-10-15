@@ -289,53 +289,141 @@ Exam1Prep<br/>No activity!  Do a practice exam</td>
 <tr>
 <td markdown="span">
 17 <br/> Thu, Sep 30 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span">
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> No class / Mohammad was sick :/ </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+</td>
 </tr>
 <tr>
 <td markdown="span" colspan="4"> [ADVANCED Ext2 Filesystem]({{ site.baseurl }}/docs/06_ext2) DUE Thu, Sep 30 2021 23:59 [Submission box](https://moodle.rose-hulman.edu/mod/assign/view.php?id=2933347&forceview=1)</td></tr>
 <tr>
 <td markdown="span">
 18 <br/> Fri, Oct 01 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span">
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> Scheduling wrap up and exam discussion </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+</td>
 </tr>
 <tr>
-<td rowspan="4" markdown="span" style="font-size:xx-large;"><a name="w5">5</a></td>
+<td rowspan="5" markdown="span" style="font-size:xx-large;"><a name="w5">5</a></td>
 <td markdown="span">
 19 <br/> Mon, Oct 04 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf"> Chapter 26 </a> </li>
+</ul>{:/}
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> More Threads </li>
+<li> Thread Libraries </li>
+<li> Threading Issues </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+</td>
 </tr>
 <tr>
 <td markdown="span">
 20 <br/> Tue, Oct 05 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-sema.pdf"> Chapter 31 </a> </li>
+</ul>{:/}
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> Semaphores </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+</td>
 </tr>
 <tr>
 <td markdown="span">
 21 <br/> Thu, Oct 07 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span">
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> <b>Lab</b> Project work time </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+</td>
 </tr>
+<tr>
+<td markdown="span" colspan="4"> CPU Scheduling DUE Thu, Oct 07 2021 23:59 [Take the quiz on Moodle](https://moodle.rose-hulman.edu/mod/quiz/view.php?id=2933368&forceview=1)</td></tr>
 <tr>
 <td markdown="span">
 22 <br/> Fri, Oct 08 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf"> Chapter 30 </a> </li>
+</ul>{:/}
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> More Sempahores </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+<a href="https://rosehulman-my.sharepoint.com/:p:/g/personal/noureddi_rose-hulman_edu/ESOpQoj830lAu2b_Rm9M120BCu6RrjWvn_ns_98s7uFpUg?e=cvGCdu"> Slides </a><br/><a href="{{ site.gh_activity_url }}/18_semaphores/"> Activity </a></td>
 </tr>
 <tr>
-<td rowspan="2" markdown="span" style="font-size:xx-large;"><a name="w6">6</a></td>
+<td rowspan="3" markdown="span" style="font-size:xx-large;"><a name="w6">6</a></td>
 <td markdown="span">
 23 <br/> Mon, Oct 11 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf"> Chapter 30 </a> </li>
+</ul>{:/}
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> Mutex </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+<a href="https://rosehulman-my.sharepoint.com/:p:/g/personal/noureddi_rose-hulman_edu/ESaiuG2DRclCu8Jxx9fLtmMBYV_rbAZUM_JyXnXmZwDmZg?e=KkPWYA"> Slides </a><br/><a href="{{ site.gh_activity_url }}/19_condition_variables"> Activity </a></td>
 </tr>
 <tr>
 <td markdown="span">
 24 <br/> Tue, Oct 12 2021</td>
-<td markdown="span" colspan="3">N/A</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf"> Chapter 30 </a> </li>
+</ul>{:/}
+</td>
+<td markdown="span" style="text-align:left">
+{::nomarkdown}<ul style="margin:0;padding:.5rem">
+<li> Condition variables </li>
+<li> More concurrency </li>
+</ul>{:/}
+</td>
+<td markdown="span">
+<a href="https://rosehulman-my.sharepoint.com/:p:/g/personal/noureddi_rose-hulman_edu/ESaiuG2DRclCu8Jxx9fLtmMBYV_rbAZUM_JyXnXmZwDmZg?e=KkPWYA"> Slides </a><br/><a href="{{ site.gh_activity_url }}/19_condition_variables"> Activity </a></td>
 </tr>
 <tr>
-<td rowspan="4" markdown="span" style="font-size:xx-large;"><a name="w7">7</a></td>
+<td markdown="span" colspan="4"> [Threads and Semaphore Basics]({{ site.baseurl }}/docs/07_semaphore_lab) DUE Thu, Oct 14 2021 23:59 [Submission box](https://moodle.rose-hulman.edu/mod/assign/view.php?id=2933392&forceview=1) <font color="#aaa"> grader: @nixonm </font> </td></tr>
+<tr>
+<td rowspan="5" markdown="span" style="font-size:xx-large;"><a name="w7">7</a></td>
 <td markdown="span">
 25 <br/> Mon, Oct 18 2021</td>
 <td markdown="span" colspan="3">N/A</td>
 </tr>
+<tr>
+<td markdown="span" colspan="4"> [Project Milestone II]({{ site.baseurl }}/docs/milestone2) DUE Mon, Oct 18 2021 23:59 [Submission box](https://moodle.rose-hulman.edu/mod/assign/view.php?id=2933578&forceview=1)</td></tr>
 <tr>
 <td markdown="span">
 26 <br/> Tue, Oct 19 2021</td>
