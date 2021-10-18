@@ -22,11 +22,28 @@ Makefile provided.
 #include <sys/wait.h>
 #include <pthread.h>
 
+int numThreads;
+unsigned long long int target;
+
+void *threadFactor(void *arg){
+    
+    int start = *(int*) arg;
+
+    // printf("Target: %llu, NumThreads: %d, Start: %d\n", target, numThreads, start);
+    long long unsigned int i;
+    for(i = start; i <= target/2; i = i + numThreads) {
+      printf("testing %llu\n", i);
+      if (target % i == 0) {
+        printf("%llu is a factor\n", i);
+      }
+  }
+  return NULL;
+}
 
 int main(void) {
   /* you can ignore the linter warning about this */
-  unsigned long long int target, i, start = 0;
-  int numThreads;
+  // unsigned long long int i, start = 0;
+  
   printf("Give a number to factor.\n");
   scanf("%llu", &target);
 
@@ -37,15 +54,19 @@ int main(void) {
     return 0;
   }
 
-  for (i = 2; i <= target/2; i = i + 1) {
-    /* You'll want to keep this testing line in.  Otherwise it goes so
-       fast it can be hard to detect your code is running in
-       parallel. Also test with a large number (i.e. > 3000) */
-    printf("testing %llu\n", i);
-    if (target % i == 0) {
-      printf("%llu is a factor\n", i);
-    }
+  pthread_t myThreads[numThreads];
+  int start[numThreads];
+
+  for(int j = 0; j<numThreads; j++){
+    start[j] = j+2;
+    pthread_create(&myThreads[j], NULL, threadFactor, &start[j]);
   }
+
+  for(int k = 0; k < numThreads; k++){
+    pthread_join(myThreads[k], NULL);
+  }
+
+  printf("Main: Done factoring\n");
   return 0;
 }
 

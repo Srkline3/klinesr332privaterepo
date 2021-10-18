@@ -42,24 +42,35 @@
 
  */
 
+sem_t blueChannel;
+sem_t redChannel;
+
 void redCommand() {
+    sem_wait(&redChannel);
     printf("Start: Red\n");
     usleep(100);
     printf("End  : Red\n");
+    sem_post(&redChannel);
 }
 
 void blueCommand() {
+    sem_wait(&blueChannel);
     printf("Start: Blue\n");
     usleep(100);
     printf("End  : Blue\n");
+    sem_post(&blueChannel);
 }
 
 void purpleCommand() {
+    sem_wait(&blueChannel);
+    sem_wait(&redChannel);
     printf("Start: Blue\n");
     printf("Start: Red\n");
     usleep(100);
     printf("End  : Red\n");
     printf("End  : Blue\n");
+    sem_post(&redChannel);
+    sem_post(&blueChannel);
 }
 
 void whiteCommand() {
@@ -103,6 +114,10 @@ void* thread3(void* p) {
 int main(int argc, char **argv) {
     pthread_t threads[3];
 
+    sem_init(&blueChannel, 0, 1);
+    sem_init(&redChannel, 0, 1);
+
+
     // to fully test your code, feel free to try other configurations
     // (e.g. a couple thread1s running at the same time, etc.)
     pthread_create(&threads[0], NULL, thread1, NULL);
@@ -110,10 +125,14 @@ int main(int argc, char **argv) {
     pthread_create(&threads[2], NULL, thread3, NULL);
 
 
+
     int i;
     for (i = 0; i < 3; i++) {
         pthread_join(threads[i], NULL);
     }
+
+    sem_destroy(&redChannel);
+    sem_destroy(&blueChannel);
 
     printf("Everything finished\n");
 
