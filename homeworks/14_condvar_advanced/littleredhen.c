@@ -25,8 +25,8 @@
   available, they complain to the little red hen and wait (in the kitchen)
   for the next batch to be ready.
 
-  Use semaphores to enforce this constraint. Note: the global numLoaves 
-  variable should be left as is (i.e. do not make it a semaphore).
+  Use mutex locks and condition variables to enforce this constraint. Note: the
+  global numLoaves variable should be left as is.
 
   look at littleRedHenSampleOutput.txt for an example correct output
   sequence
