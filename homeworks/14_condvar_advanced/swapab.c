@@ -55,21 +55,34 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+pthread_mutex_t lock;
+pthread_cond_t a, b;
+
 int swap_mode = 0;
 
 void lockA() {
+   pthread_mutex_lock(&lock);
+   pthread_cond_wait(&a, &lock);
 }
 
 void lockB() {
+   pthread_mutex_lock(&lock);
+   pthread_cond_wait(&b, &lock);
 }
 
 void unlockA() {
+   pthread_mutex_unlock(&lock);
+   pthread_cond_signal(&a);
+   
 }
 
 void unlockB() {
+   pthread_cond_signal(&b);
+   pthread_mutex_lock(&lock);
 }
 
 void swapAB() {
+
 }
 
 void swapBA() {

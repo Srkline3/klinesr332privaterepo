@@ -3,6 +3,8 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 #define NUM_LOAVES_PER_BATCH 7
 #define NUM_BATCHES 6
@@ -33,41 +35,89 @@
 
 int numLoaves;
 
-void *littleRedHenThread(void *arg) {
-	char *name = (char*)arg;
+pthread_mutex_t kitchen_lock;
+pthread_cond_t waiting_on_bread;
+pthread_cond_t waiting_to_bake;
+pthread_cond_t in_the_kitchen;
+bool someoneIsInTheKitchen = false;
+
+void *littleRedHenThread(void *arg)
+{
+	char *name = (char *)arg;
 	int batch;
 
-	for (batch = 1; batch <= 6; batch++) {
-		sleep(2);  // just makes it obvious that it won't work without
+	for (batch = 1; batch <= 6; batch++)
+	{
+		sleep(2); // just makes it obvious that it won't work without
 		// semaphores
+
+		pthread_mutex_lock(&kitchen_lock);
+		while (numLoaves > 0)
+		{
+			pthread_cond_wait(&waiting_to_bake, &kitchen_lock);
+		}
+
 		numLoaves += 7;
 		printf("%-20s: A fresh batch of bread is ready.\n", name);
+		pthread_cond_broadcast(&waiting_on_bread);
+		pthread_mutex_unlock(&kitchen_lock);
 	}
 
 	printf("%-20s: I'm fed up with feeding you lazy animals! "
-	       "No more bread!\n", name);
+		   "No more bread!\n",
+		   name);
 	return NULL;
 }
 
-void *otherAnimalThread(void *arg) {
-	char *name = (char*)arg;
+void *otherAnimalThread(void *arg)
+{
+	char *name = (char *)arg;
 	int numLoavesEaten = 0;
-	while (numLoavesEaten < NUM_LOAVES_TO_EAT) {
-		if (numLoaves <= 0) {
-			printf("%-20s: Hey, Little Red Hen, make some more bread!\n", name);
+
+	while (numLoavesEaten < NUM_LOAVES_TO_EAT)
+	{
+		pthread_mutex_lock(&kitchen_lock);
+		while (someoneIsInTheKitchen)
+		{
+			pthread_cond_wait(&in_the_kitchen, &kitchen_lock);
 		}
+
+		someoneIsInTheKitchen = true;
+		// pthread_mutex_unlock(&kitchen_lock);
+
+		while (numLoaves <= 0)
+		{
+			printf("%-20s: Hey, Little Red Hen, make some more bread!\n", name);
+			pthread_cond_signal(&waiting_to_bake);
+			pthread_cond_wait(&waiting_on_bread, &kitchen_lock);
+		}
+
+		// pthread_mutex_lock(&kitchen_lock);
 		numLoaves--;
+
 		printf("%-20s: Mmm, this loaf is delicious.\n", name);
 		numLoavesEaten++;
-		if (random() > random()) {  // Adds variety to output
+
+		pthread_mutex_unlock(&kitchen_lock);
+
+		pthread_mutex_lock(&kitchen_lock);
+
+		someoneIsInTheKitchen = false;
+		pthread_cond_signal(&in_the_kitchen);
+		pthread_mutex_unlock(&kitchen_lock);
+
+		if (random() > random())
+		{ // Adds variety to output
 			sleep(1);
 		}
 	}
 	printf("%-20s: I've had my fill of bread. Thanks, Little Red Hen!\n", name);
+
 	return NULL;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 	pthread_t dog, cat, duck, hen;
 	numLoaves = 0;
 	char dogName[] = "Lazy Dog";
