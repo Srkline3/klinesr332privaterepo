@@ -67,6 +67,7 @@ static void handler(int sig, siginfo_t *si, void *unused)
         //remove page
         int munmap_result = munmap((void *)STACKHEAP_MEM_START + lowest * getpagesize(), getpagesize());
         printf("unmapping page %d\n", lowest);
+        page_priorities[lowest] = -1;
         if (munmap_result < 0)
         {
             perror("munmap failed");
